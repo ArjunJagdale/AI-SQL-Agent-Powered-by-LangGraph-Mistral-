@@ -2,6 +2,9 @@
 
 An interactive agent built using **LangGraph**, powered by the **Mistral-3.2-24B** model via OpenRouter. This tool takes a user-uploaded CSV and answers natural language questions by generating and executing SQL queries — all within a few seconds.
 
+## You can access the demo here
+[AI SQL AGENT](https://huggingface.co/spaces/ajnx014/Natural-Language-to-SQL-Agent)
+
 > 🚀 Built for fast querying, natural interaction, and learning how AI can interact with structured data.
 
 ---
