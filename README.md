@@ -9,6 +9,11 @@ An interactive agent built using **LangGraph**, powered by the **Mistral-3.2-24B
 
 ---
 
+## 🖼️ Demo Video
+https://github.com/user-attachments/assets/7a0cc5e1-0f1a-47c3-ac18-2464efd915c5
+
+---
+
 ## 📌 Features
 
 - Upload any CSV file 📁  
@@ -49,11 +54,6 @@ Results are converted into readable markdown and shown to the user.
 | **SQLite**     | In-memory database from CSV       |
 | **Pandas**     | CSV and SQL data manipulation     |
 | **OpenRouter API** | LLM access with free-tier tokens |
-
----
-
-## 🖼️ Demo Video
-https://github.com/user-attachments/assets/7a0cc5e1-0f1a-47c3-ac18-2464efd915c5
 
 ---
 
