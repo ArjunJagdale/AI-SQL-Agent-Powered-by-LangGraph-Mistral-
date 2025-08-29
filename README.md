@@ -1,121 +1,96 @@
-# 📊 AI CSV Q&A Agent
-
-An interactive Gradio app that lets you **ask natural language questions about your CSV files**.  
-Upload a dataset, type your question, and get a **concise, human-readable answer** powered by **Pandas + LLMs (Mistral via OpenRouter)**.  
+Here’s a concise README template for your project, explaining how it works and leaving space for demo screenshots:
 
 ---
 
-## 🚀 Features
-- 📁 **Upload any CSV** and query it in plain English.  
-- 🔍 **Direct lookup with Pandas** for exact matches (fast + accurate).  
-- 🤖 **LLM-powered answers** when lookup is not enough.  
-- 🎯 **Clean, natural responses** (no SQL, no verbose filler).  
-- 🖥️ **Gradio interface** – simple and intuitive.  
+# AI CSV → SQL Agent
+
+A lightweight tool that allows you to **upload a CSV file, ask questions in plain English**, and get **answers in natural language**. The agent generates SQL internally to query the data but the user sees only readable English results.
 
 ---
 
-## 🛠️ Tech Stack
-- **[Gradio](https://www.gradio.app/):** UI framework for interaction.  
-- **[Pandas](https://pandas.pydata.org/):** Data loading & direct search.  
-- **[OpenRouter](https://openrouter.ai/):** API gateway for LLMs.  
-- **[Mistral 24B Instruct](https://mistral.ai/):** The reasoning model answering your questions.  
+## Demo - 
+
+Try it live on Hugging Face Spaces:  
+[AI CSV → SQL Agent](https://huggingface.co/spaces/ajnx014/Natural-Language-to-SQL-Agent)
+
+<img width="1363" height="590" alt="image" src="https://github.com/user-attachments/assets/9072d2d7-8af7-44bf-82f2-b51d56528cfc" />
 
 ---
 
-## ⚙️ Setup & Installation
+## Features
 
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/ArjunJagdale/ai-csv-qa-agent.git
-   cd ai-csv-qa-agent
-   ```
+* Upload any CSV file and load it into an in-memory SQLite database.
+* Ask questions in natural language about your data.
+* The agent automatically generates SQL internally to fetch relevant results.
+* SQL results are converted into **plain English answers** using an LLM.
+* No technical knowledge of SQL is required.
+* Clean, interactive Gradio interface for easy use.
 
+---
+
+## How It Works
+
+1. **CSV Upload**
+
+   * You upload a CSV file through the Gradio interface.
+   * The file is loaded into an in-memory SQLite database (`data` table).
+
+2. **Ask a Question**
+
+   * Type a question in plain English, e.g., "What is the average score of students?"
+
+3. **Internal SQL Generation**
+
+   * A language model (Mistral via OpenRouter) converts the question into an appropriate SQL query.
+
+4. **Execute SQL**
+
+   * The query runs internally against the loaded CSV data.
+
+5. **Generate Natural Language Answer**
+
+   * The SQL results are converted into **human-readable English sentences** by the LLM.
+   * The answer is displayed in the UI.
+
+---
+
+## Requirements
+
+* Python 3.10+
+* Packages: `gradio`, `pandas`, `sqlite3`, `httpx`, `langgraph`
+* OpenRouter API key (or OpenAI API key) set in environment:
+
+```bash
+export OPENROUTER_API_KEY="YOUR_KEY_HERE"
+```
+
+---
+
+## Usage
+
+1. Clone this repository.
 2. Install dependencies:
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+pip install gradio pandas httpx langgraph
+```
 
-3. Set your **OpenRouter API Key** (in Hugging Face Spaces, set this as a secret named `OPENAI_API_KEY`):
-
-   ```bash
-   export OPENAI_API_KEY=your_key_here
-   ```
-
+3. Set your API key in environment variables.
 4. Run the app:
 
-   ```bash
-   python app.py
-   ```
-
-5. Open in browser → `http://127.0.0.1:7860`
-
----
-
-## 📖 Usage
-
-1. Upload your CSV file.
-2. Ask a question in plain English (e.g., *"What is the college of Arjun Jagdale?"*).
-3. The agent:
-
-   * Checks for **direct matches** in your dataset.
-   * If found → returns neat, formatted results.
-   * If not → queries the LLM with dataset context.
-
-Example:
-
-**Input question:**
-
-```
-What is the college of Arjun Jagdale?
+```bash
+python app.py
 ```
 
-**Answer:**
-
-```
-📌 Results
-- **Name**: Arjun Jagdale, **College**: Sinhgad Institute of Technology and Science (SITS) Pune, [Link](https://gfgcdn.com/tu/TK5/)
-```
+5. Open the provided Gradio URL in your browser.
+6. Upload CSV → Ask a question → Get answers in plain English.
 
 ---
 
-## 📂 Example CSV
+## Notes
 
-| Name          | College                                                 | Profile URL                                                    |
-| ------------- | ------------------------------------------------------- | -------------------------------------------------------------- |
-| Arjun Jagdale | Sinhgad Institute of Technology and Science (SITS) Pune | [https://gfgcdn.com/tu/TK5/](https://gfgcdn.com/tu/TK5/)       |
-| John Doe      | MIT                                                     | [https://example.com/johndoe](https://example.com/johndoe)     |
-| Jane Smith    | Stanford University                                     | [https://example.com/janesmith](https://example.com/janesmith) |
+* The agent works best with **short, clear questions**.
+* If the question is ambiguous, try rephrasing.
+* All SQL execution is **internal**, users see only the plain English results.
 
----
-
-## ✅ Roadmap
-
-* [ ] Add support for **multi-CSV datasets**.
-* [ ] Enable **filtering & sorting** options in UI.
-* [ ] Support larger datasets with **chunked LLM context**.
-* [ ] Add **export to CSV/JSON** for answers.
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please fork the repo and create a PR.
-
----
-
-## 📜 License
-
-MIT License © 2025 Your Name
-
----
-
-## 🙏 Acknowledgements
-
-* [OpenRouter](https://openrouter.ai/) for API access to multiple LLMs.
-* [Mistral](https://mistral.ai/) for powerful open models.
-* [Gradio](https://www.gradio.app/) for simple UIs in Python.
-
-
-Would you like me to also add a **demo screenshot/gif** section in the README so users immediately see how the app looks before running it?
-```
+I can also draft a **minimal one-page version suitable for GitHub** with even simpler text if you want. Do you want me to do that?
