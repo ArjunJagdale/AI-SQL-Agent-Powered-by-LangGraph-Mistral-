@@ -13,9 +13,13 @@ The app is structured using the **MCP (Model–Controller–Processor) pattern**
 ## Demo - 
 
 Try it live on Hugging Face Spaces:  
+[AI CSV Agent on Hugging Face Spaces](https://huggingface.co/spaces/ajnx014/Natural-Language-to-SQL-Agent)
+
+---
 <img width="1152" height="507" alt="image" src="https://github.com/user-attachments/assets/6bdd49a1-beb7-4ff5-b6b9-a7743260a0c2" />
 
 <img width="1363" height="590" alt="image" src="https://github.com/user-attachments/assets/9072d2d7-8af7-44bf-82f2-b51d56528cfc" />
+
 ---
 
 ## Features
