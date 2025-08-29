@@ -1,4 +1,4 @@
-# 🔍 AI SQL Agent (LangGraph + Mistral)
+# 🔍 AI CSV Agent (LangGraph + Mistral)
 
 An interactive agent built using **LangGraph**, powered by the **Mistral-3.2-24B** model via OpenRouter. This tool takes a user-uploaded CSV and answers natural language questions by generating and executing SQL queries — all within a few seconds.
 
