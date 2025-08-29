@@ -1,96 +1,113 @@
-Here’s a concise README template for your project, explaining how it works and leaving space for demo screenshots:
+# AI CSV → SQL Agent (MCP + LangGraph + Mistral)
 
----
+## Overview
 
-# AI CSV → SQL Agent
+This project is a **CSV question-answering agent** that allows users to upload a CSV file and ask questions in plain English. The agent automatically:
 
-A lightweight tool that allows you to **upload a CSV file, ask questions in plain English**, and get **answers in natural language**. The agent generates SQL internally to query the data but the user sees only readable English results.
+1. Converts natural language questions into SQL queries.
+2. Executes SQL queries on the uploaded CSV.
+3. Returns **concise natural language answers** instead of raw tables or dictionaries.
 
----
+The app is structured using the **MCP (Model–Controller–Processor) pattern** for clean, modular code.
 
 ## Demo - 
 
 Try it live on Hugging Face Spaces:  
-[AI CSV → SQL Agent](https://huggingface.co/spaces/ajnx014/Natural-Language-to-SQL-Agent)
+<img width="1152" height="507" alt="image" src="https://github.com/user-attachments/assets/6bdd49a1-beb7-4ff5-b6b9-a7743260a0c2" />
 
 <img width="1363" height="590" alt="image" src="https://github.com/user-attachments/assets/9072d2d7-8af7-44bf-82f2-b51d56528cfc" />
-
 ---
 
 ## Features
 
-* Upload any CSV file and load it into an in-memory SQLite database.
-* Ask questions in natural language about your data.
-* The agent automatically generates SQL internally to fetch relevant results.
-* SQL results are converted into **plain English answers** using an LLM.
-* No technical knowledge of SQL is required.
-* Clean, interactive Gradio interface for easy use.
+* Upload any CSV file.
+* Ask questions in natural language.
+* AI generates SQL queries and executes them.
+* Results are returned as neat **plain English sentences**.
+* Interactive and polished UI built with **Gradio**.
+* LLM powered by **Mistral via OpenRouter API**.
+* Workflow orchestrated using **LangGraph** for modular node-based execution.
 
 ---
 
-## How It Works
+## MCP Architecture
 
-1. **CSV Upload**
+### **Processor (P)**
 
-   * You upload a CSV file through the Gradio interface.
-   * The file is loaded into an in-memory SQLite database (`data` table).
+* Handles **data ingestion and formatting**.
+* Loads CSV into an in-memory SQLite database.
+* Formats output into HTML cards for the UI.
 
-2. **Ask a Question**
+### **Model (M)**
 
-   * Type a question in plain English, e.g., "What is the average score of students?"
+* Handles **logic and computation**.
+* Calls LLM to generate SQL queries from user questions.
+* Executes SQL queries.
+* Converts query results into **concise natural language answers**.
 
-3. **Internal SQL Generation**
+### **Controller (C)**
 
-   * A language model (Mistral via OpenRouter) converts the question into an appropriate SQL query.
-
-4. **Execute SQL**
-
-   * The query runs internally against the loaded CSV data.
-
-5. **Generate Natural Language Answer**
-
-   * The SQL results are converted into **human-readable English sentences** by the LLM.
-   * The answer is displayed in the UI.
+* **Orchestrates the workflow** between Processor and Model.
+* Receives user questions and invokes Model & Processor methods.
+* Returns final formatted results to the UI.
 
 ---
 
-## Requirements
+## How it Works
 
-* Python 3.10+
-* Packages: `gradio`, `pandas`, `sqlite3`, `httpx`, `langgraph`
-* OpenRouter API key (or OpenAI API key) set in environment:
-
-```bash
-export OPENROUTER_API_KEY="YOUR_KEY_HERE"
-```
+1. User uploads a CSV file → Processor loads it into SQLite.
+2. User asks a question → Controller sends it to Model.
+3. Model generates SQL using **Mistral LLM via OpenRouter**.
+4. SQL is executed on the CSV → results returned to Model.
+5. Model converts results into a **plain English answer**.
+6. Controller passes the answer to Processor → formatted HTML card.
+7. UI displays the result.
 
 ---
 
-## Usage
+## Tech Stack
 
-1. Clone this repository.
-2. Install dependencies:
+* **Python**
+* **Gradio** for UI
+* **SQLite** for in-memory CSV storage
+* **LangGraph** for workflow orchestration
+* **Mistral LLM via OpenRouter API** for natural language processing
+* **Pandas** for CSV handling
 
-```bash
-pip install gradio pandas httpx langgraph
-```
+---
 
-3. Set your API key in environment variables.
-4. Run the app:
+## Screenshots
 
-```bash
-python app.py
-```
+<!-- Add your screenshots here -->
 
-5. Open the provided Gradio URL in your browser.
-6. Upload CSV → Ask a question → Get answers in plain English.
+![Screenshot 1](#)
+![Screenshot 2](#)
+
+---
+
+## How to Run
+
+1. Set your API key in environment variables:
+
+   ```bash
+   export OPENROUTER_API_KEY="YOUR_KEY"
+   ```
+2. Install requirements:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Run the app:
+
+   ```bash
+   python app.py
+   ```
+4. Open the provided Gradio link, upload your CSV, and start asking questions.
 
 ---
 
 ## Notes
 
-* The agent works best with **short, clear questions**.
-* If the question is ambiguous, try rephrasing.
-* All SQL execution is **internal**, users see only the plain English results.
-
-I can also draft a **minimal one-page version suitable for GitHub** with even simpler text if you want. Do you want me to do that?
+* Works best with **short, clear questions**.
+* Make sure column names in CSV are accurate for easier SQL generation.
+* Fully modular code using **MCP** pattern: easy to extend or swap LLMs.
