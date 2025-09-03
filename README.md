@@ -1,15 +1,16 @@
-# AI CSV → SQL Agent (MCP + LangGraph + Mistral)
+# 📊 AI CSV → SQL Agent
 
-## Overview
+An interactive agent that lets you upload a CSV file, ask questions in plain English, and get **natural language answers** (instead of raw tables).
 
-This project is a **CSV question-answering agent** that allows users to upload a CSV file and ask questions in plain English. The agent automatically:
+Behind the scenes, the agent:
 
-1. Converts natural language questions into SQL queries.
-2. Executes SQL queries on the uploaded CSV.
-3. Returns **concise natural language answers** instead of raw tables or dictionaries.
+* ✅ Converts questions → **SQL queries**
+* ⚡ Executes SQL on your CSV (in-memory SQLite)
+* 🗣️ Translates results into **concise answers**
+* 🔗 Uses **LangGraph** to **structure multi-step reasoning** and make SQL generation + interpretation more reliable
+* 🏗️ Follows the **MCP (Model–Controller–Processor)** architectural pattern for clean modularity
 
-The app is structured using the **MCP (Model–Controller–Processor) pattern** for clean, modular code.
-
+---
 ## Demo - 
 
 Try it live on Hugging Face Spaces:  
@@ -20,98 +21,54 @@ Try it live on Hugging Face Spaces:
 
 https://github.com/user-attachments/assets/e575c257-e161-4425-9999-4a4114b67df0
 
----
-
-## Features
-
-* Upload any CSV file.
-* Ask questions in natural language.
-* AI generates SQL queries and executes them.
-* Results are returned as neat **plain English sentences**.
-* Interactive and polished UI built with **Gradio**.
-* LLM powered by **Mistral via OpenRouter API**.
-* Workflow orchestrated using **LangGraph** for modular node-based execution.
 
 ---
 
-## MCP Architecture
+## 🏗️ Architecture (MCP = Model–Controller–Processor)
 
-### **Processor (P)**
+⚠️ Note: here **MCP = Model–Controller–Processor**, not Anthropic’s *Model Context Protocol*.
 
-* Handles **data ingestion and formatting**.
-* Loads CSV into an in-memory SQLite database.
-* Formats output into HTML cards for the UI.
+* **Processor (`processor.py`)**
 
-### **Model (M)**
+  * Loads CSVs, validates structure, cleans column names.
+  * Stores data in an **in-memory SQLite database**.
+  * Provides dataset info and HTML helpers (for tables, errors, cards).
 
-* Handles **logic and computation**.
-* Calls LLM to generate SQL queries from user questions.
-* Executes SQL queries.
-* Converts query results into **concise natural language answers**.
+* **Model (`model.py`) + LangGraph**
 
-### **Controller (C)**
+  * The **LLM brain** of the system.
+  * **LangGraph** provides a *graph-based workflow engine* for orchestrating steps like:
 
-* **Orchestrates the workflow** between Processor and Model.
-* Receives user questions and invokes Model & Processor methods.
-* Returns final formatted results to the UI.
+    1. **Interpretation** – Parse the user’s natural language question into structured intent.
+    2. **SQL Generation** – Ask the LLM to generate a valid SQLite query.
+    3. **Validation** – Sanitize SQL (allow only `SELECT`, check schema, reject unsafe ops).
+    4. **Execution** – Run the query against the SQLite database.
+    5. **Summarization** – Convert raw query results into a **clear natural-language answer**.
+  * LangGraph makes this robust by treating each step as a **node in a graph** → you can retry, branch, or recover gracefully when something fails.
+  * Example: If SQL generation fails, LangGraph can automatically re-prompt the LLM with more schema details before moving forward.
 
----
+* **Controller (`controller.py`)**
 
-## How it Works
+  * Orchestrates between Processor & Model.
+  * Manages dataset stats, query history, and HTML formatting.
+  * Adds guardrails for empty inputs or failed queries.
 
-1. User uploads a CSV file → Processor loads it into SQLite.
-2. User asks a question → Controller sends it to Model.
-3. Model generates SQL using **Mistral LLM via OpenRouter**.
-4. SQL is executed on the CSV → results returned to Model.
-5. Model converts results into a **plain English answer**.
-6. Controller passes the answer to Processor → formatted HTML card.
-7. UI displays the result.
+* **App (`app.py`)**
 
----
-
-## Tech Stack
-
-* **Python**
-* **Gradio** for UI
-* **SQLite** for in-memory CSV storage
-* **LangGraph** for workflow orchestration
-* **Mistral LLM via OpenRouter API** for natural language processing
-* **Pandas** for CSV handling
+  * **Gradio UI** for uploads, queries, results, SQL preview, and history.
+  * Includes helpful tips + example queries.
 
 ---
 
-## Screenshots
+## 🚀 Why LangGraph?
 
-<!-- Add your screenshots here -->
+LangGraph is key here because natural language → SQL is **multi-step and error-prone**.
+Without LangGraph, you’d just “ask the LLM” and hope for the best. With LangGraph:
 
-![Screenshot 1](#)
-![Screenshot 2](#)
+* You get a **structured pipeline** instead of a single fragile call.
+* Failures can be retried or repaired (e.g., regenerate SQL if schema mismatch).
+* You can **inject schema + sample data** at just the right stage.
+* Results can be summarized differently depending on the query type (counts vs aggregations vs text searches).
 
----
+This makes the whole system **far more reliable, interpretable, and extensible**.
 
-## How to Run
-
-1. Set your API key in environment variables:
-
-   ```bash
-   export OPENROUTER_API_KEY="YOUR_KEY"
-   ```
-2. Install requirements:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Run the app:
-
-   ```bash
-   python app.py
-   ```
-4. Open the provided Gradio link, upload your CSV, and start asking questions.
-
----
-
-## Notes
-
-* Works best with **short, clear questions**.
-* Make sure column names in CSV are accurate for easier SQL generation.
-* Fully modular code using **MCP** pattern: easy to extend or swap LLMs.
