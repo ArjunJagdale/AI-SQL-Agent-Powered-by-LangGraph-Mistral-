@@ -15,17 +15,18 @@ Behind the scenes, the agent:
 
 Try it live on Hugging Face Spaces:  
 [AI CSV Agent on Hugging Face Spaces](https://huggingface.co/spaces/ajnx014/Natural-Language-to-SQL-Agent)
----
-## Photos
-<img width="1896" height="859" alt="image" src="https://github.com/user-attachments/assets/b57fc813-8cb0-45cc-8799-4a2440b8704e" />
-<img width="1892" height="865" alt="image" src="https://github.com/user-attachments/assets/fa2b6e50-8dc6-4de7-bc5c-c2cee117c1ba" />
-<img width="1896" height="390" alt="image" src="https://github.com/user-attachments/assets/7bc3b69a-88ec-48fa-b4c5-23859705847e" />
 
 ---
 ### Video
 
 https://github.com/user-attachments/assets/e575c257-e161-4425-9999-4a4114b67df0
 
+---
+
+## Photos
+<img width="1896" height="859" alt="image" src="https://github.com/user-attachments/assets/b57fc813-8cb0-45cc-8799-4a2440b8704e" />
+<img width="1892" height="865" alt="image" src="https://github.com/user-attachments/assets/fa2b6e50-8dc6-4de7-bc5c-c2cee117c1ba" />
+<img width="1896" height="390" alt="image" src="https://github.com/user-attachments/assets/7bc3b69a-88ec-48fa-b4c5-23859705847e" />
 
 ---
 
